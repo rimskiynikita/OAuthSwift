@@ -34,11 +34,6 @@ open class OAuth2Swift: OAuthSwift {
     var codeVerifier: String?
 
     // MARK: init
-    public convenience init(consumerKey: String, consumerSecret: String, authorizeUrl: URLConvertible, accessTokenUrl: URLConvertible, responseType: String) {
-        self.init(consumerKey: consumerKey, consumerSecret: consumerSecret, authorizeUrl: authorizeUrl, responseType: responseType)
-        self.accessTokenUrl = accessTokenUrl.string
-    }
-
     public convenience init(consumerKey: String, consumerSecret: String, authorizeUrl: URLConvertible, accessTokenUrl: URLConvertible, responseType: String, contentType: String) {
         self.init(consumerKey: consumerKey, consumerSecret: consumerSecret, authorizeUrl: authorizeUrl, responseType: responseType)
         self.accessTokenUrl = accessTokenUrl.string
@@ -50,6 +45,16 @@ open class OAuth2Swift: OAuthSwift {
         self.consumerSecret = consumerSecret
         self.authorizeUrl = authorizeUrl.string
         self.responseType = responseType
+        super.init(consumerKey: consumerKey, consumerSecret: consumerSecret)
+        self.client.credential.version = .oauth2
+    }
+    
+    public init(consumerKey: String, consumerSecret: String, authorizeUrl: URLConvertible, accessTokenUrl: URLConvertible, responseType: String) {
+        self.consumerKey = consumerKey
+        self.consumerSecret = consumerSecret
+        self.authorizeUrl = authorizeUrl.string
+        self.responseType = responseType
+        self.accessTokenUrl = accessTokenUrl.string
         super.init(consumerKey: consumerKey, consumerSecret: consumerSecret)
         self.client.credential.version = .oauth2
     }
